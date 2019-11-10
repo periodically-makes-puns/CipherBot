@@ -2,8 +2,6 @@ import discord
 from discord.ext import commands
 import os
 
-startup_extensions = ["affine","atbash","caesar","morse","substitution"]
-
 if __name__ == '__main__':
     bot = commands.Bot(command_prefix=['c!', 'c.', 'c#'], case_insensitive=True, description="CipherBot")
 
@@ -76,6 +74,22 @@ if __name__ == '__main__':
                 **Error:**  """ + str(error)
             )
             raise error
-
+    
+    @bot.command()
+    @commands.has_role("Mod")
+    async def load(ctx,extension):
+        bot.load_extension(f'cogs.{extension}')
+    
+    @bot.command()
+    @commands.has_role("Mod")
+    async def unload(ctx,extension):
+        bot.unload_extension(f'cogs.{extension}')
+    
+    @bot.command()
+    @commands.has_role("Mod")
+    async def reload(ctx,extension):
+        bot.unload_extension(f'cogs.{extension}')
+        bot.load_extension(f'cogs.{extension}')
+    
     token = os.getenv("token")
-    bot.run(token)
+    bot.run("NjQzMTk0MjY1NTY4MTQ5NTI0.Xch7aA.1c-X2Nxw5UDQ4QhXf5I7Mumg64g")

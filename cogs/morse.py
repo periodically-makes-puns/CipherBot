@@ -1,8 +1,9 @@
 import quote
 import random
 from string import punctuation
+import discord
+from discord.ext import commands
 
-punctuations = '''!()-[]{};:'"\,<>./?@#$%^&*_~'''
 MORSE_CODE_DICT = { 'A':'.-', 'B':'-...', 
                     'C':'-.-.', 'D':'-..', 'E':'.', 
                     'F':'..-.', 'G':'--.', 'H':'....', 
@@ -19,32 +20,42 @@ MORSE_CODE_DICT = { 'A':'.-', 'B':'-...',
                     '?':'..--..', '/':'-..-.', '-':'-....-', 
                     '(':'-.--.', ')':'-.--.-'} 
 
-def morse(plaintext): 
-    morsecode = ''
-    plaintext = plaintext.translate(str.maketrans('', '', punctuation))
-
-    for letter in plaintext.upper():
-        if letter == ' ': 
-            morsecode += " "
-        else:
-            morsecode += MORSE_CODE_DICT[letter] + ' '
-
-    return morsecode
-
-def pollux():
-    plaintext = quote.getQuote()
-    morsecode = morse(plaintext.upper()).replace(" ", "x")
-    # morsecode always has an x at the end? Should it be like this?
-    digitsymbols = ["x","-","."]
-    key = [random.choice(digitsymbols) for i in range(9)]
-    ciphertext = ""
-
-    for n in morsecode:
-        ciphertext += str(random.choice([i for i, x in enumerate(key) if x == n]))
+class Morse(commands.Cog):
+    def __init__(self,bot):
+        self.bot = bot
     
-    ciphertext = ' '.join([ciphertext[i:i+5] for i in range(0, len(ciphertext), 5)])
-    
-    for i in range(random.randint(0,3)):
-        key[key.index(random.choice(key))] = "?"
+    @commands.command()
+    async def pollux(self,ctx):
+        plaintext = quote.getQuote()
+        morsecode = morse(plaintext.upper()).replace(" ", "x")
+        # morsecode always has an x at the end? Should it be like this?
+        digitsymbols = ["x","-","."]
+        key = [random.choice(digitsymbols) for i in range(9)]
+        ciphertext = ""
 
-    return [plaintext,ciphertext,key]
+        for n in morsecode:
+            ciphertext += str(random.choice([i for i, x in enumerate(key) if x == n]))
+        
+        ciphertext = ' '.join([ciphertext[i:i+5] for i in range(0, len(ciphertext), 5)])
+        
+        for i in range(random.randint(0,3)):
+            key[key.index(random.choice(key))] = "?"
+        
+        await ctx.send(f'Ciphertext: {ciphertext}\nKey: {key}')
+        #TODO: Store plaintext in database
+        return [plaintext,ciphertext,key]
+
+def morse(plaintext):
+        morsecode = ''
+        plaintext = plaintext.translate(str.maketrans('', '', punctuation))
+
+        for letter in plaintext.upper():
+            if letter == ' ': 
+                morsecode += " "
+            else:
+                morsecode += MORSE_CODE_DICT[letter] + ' '
+
+        return morsecode
+
+def setup(bot):
+    bot.add_cog(Morse(bot))
