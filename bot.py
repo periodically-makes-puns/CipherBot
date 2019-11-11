@@ -91,5 +91,5 @@ if __name__ == '__main__':
         bot.unload_extension(f'cogs.{extension}')
         bot.load_extension(f'cogs.{extension}')
     
-    token = os.getenv("token")
-    bot.run("NjQzMTk0MjY1NTY4MTQ5NTI0.XcisKg.zzkjePudDviJKj3XGkObx8d3WuU")
+    token = open("token.txt", "r").read()
+    bot.run(token)
