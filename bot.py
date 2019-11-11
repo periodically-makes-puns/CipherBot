@@ -1,9 +1,8 @@
 import discord
 from discord.ext import commands
-import os
 
 if __name__ == '__main__':
-    bot = commands.Bot(command_prefix=['c!', 'c.', 'c#'], case_insensitive=True, description="CipherBot")
+    bot = commands.Bot(command_prefix=['c!', 'c.', 'c#', "c! ", "c. ", "c# "], case_insensitive=True, description="CipherBot")
 
     @bot.event
     async def on_ready():
@@ -14,7 +13,7 @@ if __name__ == '__main__':
         
         await bot.change_presence(activity=discord.Activity(type=3, name="c!help"))
     
-    for extension in ('cogs.affine', 'cogs.atbash', 'cogs.caesar', 'cogs.morse', 'cogs.substitution'):
+    for extension in ('cogs.affine', 'cogs.atbash', 'cogs.caesar', 'cogs.morse', 'cogs.substitution', 'cogs.check', 'cogs.scoreboard', 'cogs.help'):
         bot.load_extension(extension)
     
     @bot.check
@@ -90,6 +89,6 @@ if __name__ == '__main__':
     async def reload(ctx,extension):
         bot.unload_extension(f'cogs.{extension}')
         bot.load_extension(f'cogs.{extension}')
-    
+
     token = open("token.txt", "r").read()
     bot.run(token)
