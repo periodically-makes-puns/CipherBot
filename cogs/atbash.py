@@ -1,4 +1,5 @@
 import quote
+from data import db
 import discord
 from discord.ext import commands
 
@@ -23,8 +24,7 @@ class Atbash(commands.Cog):
                 ciphertext += l
         
         await ctx.send(f'Ciphertext: {ciphertext}')
-        #TODO: Store plaintext in database
-        return [plaintext,ciphertext]
+        db.writeplaintext(ctx.message.author.id, plaintext)
 
 def setup(bot):
     bot.add_cog(Atbash(bot))

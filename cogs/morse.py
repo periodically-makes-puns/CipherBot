@@ -1,6 +1,7 @@
 import quote
 import random
 from string import punctuation
+from data import db
 import discord
 from discord.ext import commands
 
@@ -42,8 +43,7 @@ class Morse(commands.Cog):
             key[key.index(random.choice(key))] = "?"
         
         await ctx.send(f'Ciphertext: {ciphertext}\nKey: {key}')
-        #TODO: Store plaintext in database
-        return [plaintext,ciphertext,key]
+        db.writeplaintext(ctx.message.author.id, plaintext)
 
 def morse(plaintext):
         morsecode = ''

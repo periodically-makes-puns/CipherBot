@@ -1,5 +1,6 @@
 import quote
 import random
+from data import db
 import discord
 from discord.ext import commands
 
@@ -26,7 +27,7 @@ class Caesar(commands.Cog):
                 ciphertext += l
         
         await ctx.send(f'Ciphertext: {ciphertext}')
-        #TODO: Store plaintext in database
+        db.writeplaintext(ctx.message.author.id, plaintext)
         return [plaintext,ciphertext]
 
 def setup(bot):

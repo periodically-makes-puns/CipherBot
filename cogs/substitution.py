@@ -1,5 +1,6 @@
 import quote
 import random
+from data import db
 import discord
 from discord.ext import commands
 
@@ -24,8 +25,7 @@ class Substitution(commands.Cog):
         ciphertext = ''.join(keyMap.get(c.lower(), c) for c in plaintext)
 
         await ctx.send(f'Ciphertext: {ciphertext}')
-        #TODO: Store plaintext in database
-        return [plaintext, ciphertext]
+        db.writeplaintext(ctx.message.author.id, plaintext)
     
     @commands.command()
     async def patistocrat(self,ctx):
@@ -35,8 +35,7 @@ class Substitution(commands.Cog):
         ciphertext = ''.join(keyMap.get(c.lower(), c) for c in plaintext).replace(" ", "")
 
         await ctx.send(f'Ciphertext: {ciphertext}')
-        #TODO: Store plaintext in database
-        return [plaintext, ciphertext] 
+        db.writeplaintext(ctx.message.author.id, plaintext)
 
 def setup(bot):
     bot.add_cog(Substitution(bot))

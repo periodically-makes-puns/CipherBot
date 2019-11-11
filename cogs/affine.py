@@ -1,5 +1,6 @@
 import quote
 import random
+from data import db
 import discord
 from discord.ext import commands
 
@@ -24,10 +25,9 @@ class Affine(commands.Cog):
                 ciphertext += chr(((a*(ord(l)-65) + b) % 26) + 65)
             if l in punctuations:
                 ciphertext += l
-
+        
         await ctx.send(f'Ciphertext: {ciphertext}\nA: {a}\nB: {b}')
-        #TODO: Store plaintext in database
-        return [plaintext,ciphertext,a,b]
+        db.writeplaintext(ctx.message.author.id, plaintext)
 
 def setup(bot):
     bot.add_cog(Affine(bot))

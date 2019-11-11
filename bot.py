@@ -92,4 +92,4 @@ if __name__ == '__main__':
         bot.load_extension(f'cogs.{extension}')
     
     token = os.getenv("token")
-    bot.run("NjQzMTk0MjY1NTY4MTQ5NTI0.Xch7aA.1c-X2Nxw5UDQ4QhXf5I7Mumg64g")
+    bot.run("NjQzMTk0MjY1NTY4MTQ5NTI0.XcisKg.zzkjePudDviJKj3XGkObx8d3WuU")
