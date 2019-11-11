@@ -22,10 +22,12 @@ class Check(commands.Cog):
         elif(ans.lower().translate(str.maketrans('', '', punctuation)) == response.lower()):
             await ctx.send(f'Correct!\nPlaintext: ||{ans}||')
             db.writeplaintext(userid,"")
+            db.changescore(userid,1)
         
         elif(ans.lower().translate(str.maketrans('', '', punctuation)) != response.lower()):
             await ctx.send(f'Wrong.\nPlaintext: ||{ans}||')
             db.writeplaintext(userid,"")
+            db.changescore(userid,1)
 
 def setup(bot):
     bot.add_cog(Check(bot))
