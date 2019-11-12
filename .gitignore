@@ -3,4 +3,5 @@ env/
 __pycache__/
 */__pycache__/
 token.txt
-users.db
+data/users.db
+nohup.out
