@@ -13,8 +13,8 @@ class Scoreboard(commands.Cog):
         scores = db.readallscores()
         scores.sort(key = itemgetter(1), reverse = True)
         scores = scores[:5]
-        for index, score in scores:
-            leaderboard += f'\n{index + 1}. {ctx.bot.get_user(scores[index][0]).name}'
+        for index, score in enumerate(scores):
+            leaderboard += f'\n{index + 1}. {ctx.bot.get_user(score[0]).name} {score}'
         
         leaderboard += f'```'
         await ctx.send(leaderboard)
