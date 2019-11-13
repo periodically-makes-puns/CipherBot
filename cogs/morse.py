@@ -26,26 +26,31 @@ class Morse(commands.Cog):
         self.bot = bot
     
     @commands.command()
-    async def morbit(self,ctx):
-        plaintext = quote.getQuote()
-        morsecode = morse(plaintext.upper()).replace(" ", "x")
+    async def pollux(self,ctx):
+        plaintext = getQuote()
+        morsecode = morse(plaintext.upper().strip()).replace(" ", "x")
         # morsecode always has an x at the end? Should it be like this?
         digitsymbols = ["x","-","."]
-        key = [random.choice(digitsymbols) for i in range(9)]
+        key = list("....---xxx")
+        random.shuffle(key)
         ciphertext = ""
 
         for n in morsecode:
             ciphertext += str(random.choice([i for i, x in enumerate(key) if x == n]))
-        
-        ciphertext = ' '.join([ciphertext[i:i+5] for i in range(0, len(ciphertext), 5)])
-        
-        for i in range(random.randint(0,3)):
-            key[key.index(random.choice(key))] = "?"
-        
-        await ctx.send(f'Ciphertext: {ciphertext}\nKey: {key}')
-        db.writeplaintext(ctx.message.author.id, plaintext)
 
-def morse(plaintext):
+        ciphertext = ' '.join([ciphertext[i:i+5] for i in range(0, len(ciphertext), 5)])
+
+        if random.random() > 0.5:
+            for i in range(random.randint(0,4)): # give 6 of key
+                key[key.index(random.choice(key))] = "?"
+            crib = None
+        else:
+            sind = random.randint(0, len(plaintext)-4)
+            crib = plaintext[sind:sind+4]
+
+        print(f'Ciphertext: {ciphertext}\n' + (f"Crib: {crib}\n" if crib is not None else f"Key: {''.join(key)}\n"))
+
+def morse(plaintext: str) -> str:
         morsecode = ''
         plaintext = plaintext.translate(str.maketrans('', '', punctuation))
 
@@ -55,7 +60,7 @@ def morse(plaintext):
             else:
                 morsecode += MORSE_CODE_DICT[letter] + ' '
 
-        return morsecode
+        return morsecode[:-1] # remove trailing space
 
 def setup(bot):
     bot.add_cog(Morse(bot))
