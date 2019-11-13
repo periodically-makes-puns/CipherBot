@@ -3,13 +3,10 @@ import random
 from data import db
 import discord
 from discord.ext import commands
-
-plaintext = ""
-alphabet = 'abcdefghijklmnopqrstuvwxyz'
+from string import ascii_lowercase
 
 def makeKey():
-    global alphabet
-    alphabetlist = list(alphabet)
+    alphabetlist = list(ascii_lowercase)
     random.shuffle(alphabetlist)
     return ''.join(alphabetlist)
 
