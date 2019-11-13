@@ -26,7 +26,7 @@ class Morse(commands.Cog):
         self.bot = bot
     
     @commands.command()
-    async def pollux(self,ctx):
+    async def morbit(self,ctx):
         plaintext = quote.getQuote()
         morsecode = morse(plaintext.upper()).replace(" ", "x")
         # morsecode always has an x at the end? Should it be like this?
