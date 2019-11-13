@@ -28,7 +28,7 @@ class Morse(commands.Cog):
     @commands.command()
     async def pollux(self,ctx):
         plaintext = getQuote()
-        morsecode = morse(plaintext.upper().strip()).replace(" ", "x")
+        morsecode = morse(plaintext.upper().replace(" ", "x")
         # morsecode always has an x at the end? Should it be like this?
         digitsymbols = ["x","-","."]
         key = list("....---xxx")

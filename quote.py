@@ -7,4 +7,4 @@ def reload():
     quotes = open(file, "r", encoding="utf-8").readlines()
 
 def getQuote() -> str:
-    return random.choice(quotes)
+    return random.choice(quotes).strip()
