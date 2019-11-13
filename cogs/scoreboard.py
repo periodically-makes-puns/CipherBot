@@ -9,13 +9,15 @@ class Scoreboard(commands.Cog):
     
     @commands.command()
     async def scoreboard(self,ctx):
+        leaderboard = f'```'
         scores = db.readallscores()
         scores.sort(key = itemgetter(1), reverse = True)
-        if len(scores) < 5:
-            await ctx.send("Not enough people have played yet for a leaderboard to form")
-        else:
-            scores = scores[:5]
-            await ctx.send(f'```1. {ctx.bot.fetch_user(scores[0][0]).name}\n2. {ctx.bot.get_user(scores[1][0]).name}\n3. {ctx.bot.get_user(scores[2][0]).name}\n4. {ctx.bot.get_user(scores[3][0]).name}\n5. {ctx.bot.get_user(scores[4][0]).name}\n```')
+        scores = scores[:5]
+        for index, score in scores:
+            leaderboard += f'\n{index + 1}. {ctx.bot.get_user(scores[index][0]).name}'
+        
+        leaderboard += f'```'
+        await ctx.send(leaderboard)
 
 def setup(bot):
     bot.add_cog(Scoreboard(bot))

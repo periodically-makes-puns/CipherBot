@@ -91,4 +91,4 @@ if __name__ == '__main__':
         bot.load_extension(f'cogs.{extension}')
 
     token = open("token.txt", "r").read()
-    bot.run(token)
+    bot.run(token.strip())

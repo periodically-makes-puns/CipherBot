@@ -13,7 +13,7 @@ class Check(commands.Cog):
         response = ctx.message.content[8:].translate(str.maketrans('', '', punctuation))
         ans = db.readplaintext(userid)
         
-        if(ans == ""):
+        if(ans == "" or ans is None):
             await ctx.send("Ask me to give you a cipher problem first.")
         
         elif(response == ""):
